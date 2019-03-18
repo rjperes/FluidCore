@@ -8,18 +8,18 @@ namespace FluidCore
     [Serializable]
     internal sealed class FluidObjectTypeDescriptor : CustomTypeDescriptor
     {
-        private readonly FluidObject instance;
+        private readonly FluidObject _instance;
 
         public FluidObjectTypeDescriptor(object instance)
         {
-            this.instance = instance as FluidObject;
+            this._instance = instance as FluidObject;
         }
 
         public override PropertyDescriptorCollection GetProperties()
         {
-            if (this.instance != null)
+            if (this._instance != null)
             {
-                return new PropertyDescriptorCollection((this.instance as IDictionary<string, object>).Keys.Select(x => new FluidObjectPropertyDescriptor(x)).ToArray());
+                return new PropertyDescriptorCollection((this._instance as IDictionary<string, object>).Keys.Select(x => new FluidObjectPropertyDescriptor(x)).ToArray());
             }
             else
             {

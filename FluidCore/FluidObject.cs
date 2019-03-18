@@ -21,7 +21,6 @@ namespace FluidCore
         public const string Value = "$value";
 
         private static readonly string[] SpecialKeys = new string[] { Path, Parent, Root, Value, Type };
-
         private readonly IDictionary<string, object> _values = new Dictionary<string, object>();
         private object _value;
         private FluidObject _parent;
@@ -53,43 +52,24 @@ namespace FluidCore
             }
         }
 
-        public override int GetHashCode()
-        {
-            if (this._value != null)
-            {
-                return this._value.GetHashCode();
-            }
-            else
-            {
-                return base.GetHashCode();
-            }
-        }
-
         public override bool Equals(object obj)
         {
-            if (object.ReferenceEquals(this, obj))
+            if (object.ReferenceEquals(this, obj) == true)
             {
                 return true;
             }
 
-            var other = obj as FluidObject;
-
-            if (other == null)
+            if (!(obj is FluidObject other))
             {
                 return false;
             }
 
-            if (!object.Equals(other._value, this._value))
+            if (object.Equals(other._value, this._value) == false)
             {
                 return false;
             }
 
             return this._values.SequenceEqual(other._values);
-        }
-
-        public override IEnumerable<string> GetDynamicMemberNames()
-        {
-            return this._values.Keys.Concat((this._value != null) ? TypeDescriptor.GetProperties(this._value).OfType<PropertyDescriptor>().Select(x => x.Name) : Enumerable.Empty<string>());
         }
 
         public override bool TryBinaryOperation(BinaryOperationBinder binder, object arg, out object result)
@@ -114,47 +94,47 @@ namespace FluidCore
             {
                 if (this._value is short)
                 {
-                    result = (short)_value + 1;
+                    result = (short)this._value + 1;
                     return true;
                 }
                 else if (this._value is int)
                 {
-                    result = (int)_value + 1;
+                    result = (int)this._value + 1;
                     return true;
                 }
                 else if (this._value is long)
                 {
-                    result = (long)_value + 1;
+                    result = (long)this._value + 1;
                     return true;
                 }
                 else if (this._value is ushort)
                 {
-                    result = (ushort)_value + 1;
+                    result = (ushort)this._value + 1;
                     return true;
                 }
                 else if (this._value is uint)
                 {
-                    result = (uint)_value + 1;
+                    result = (uint)this._value + 1;
                     return true;
                 }
                 else if (this._value is ulong)
                 {
-                    result = (ulong)_value + 1;
+                    result = (ulong)this._value + 1;
                     return true;
                 }
                 else if (this._value is decimal)
                 {
-                    result = (decimal)_value + 1;
+                    result = (decimal)this._value + 1;
                     return true;
                 }
                 else if (this._value is float)
                 {
-                    result = (float)_value + 1;
+                    result = (float)this._value + 1;
                     return true;
                 }
                 else if (this._value is double)
                 {
-                    result = (double)_value + 1;
+                    result = (double)this._value + 1;
                     return true;
                 }
             }
@@ -162,47 +142,47 @@ namespace FluidCore
             {
                 if (this._value is short)
                 {
-                    result = (short)_value - 1;
+                    result = (short)this._value - 1;
                     return true;
                 }
                 else if (this._value is int)
                 {
-                    result = (int)_value - 1;
+                    result = (int)this._value - 1;
                     return true;
                 }
                 else if (this._value is long)
                 {
-                    result = (long)_value - 1;
+                    result = (long)this._value - 1;
                     return true;
                 }
                 else if (this._value is ushort)
                 {
-                    result = (ushort)_value - 1;
+                    result = (ushort)this._value - 1;
                     return true;
                 }
                 else if (this._value is uint)
                 {
-                    result = (uint)_value - 1;
+                    result = (uint)this._value - 1;
                     return true;
                 }
                 else if (this._value is ulong)
                 {
-                    result = (ulong)_value - 1;
+                    result = (ulong)this._value - 1;
                     return true;
                 }
                 else if (this._value is decimal)
                 {
-                    result = (decimal)_value - 1;
+                    result = (decimal)this._value - 1;
                     return true;
                 }
                 else if (this._value is float)
                 {
-                    result = (float)_value - 1;
+                    result = (float)this._value - 1;
                     return true;
                 }
                 else if (this._value is double)
                 {
-                    result = (double)_value - 1;
+                    result = (double)this._value - 1;
                     return true;
                 }
             }
@@ -210,40 +190,41 @@ namespace FluidCore
             {
                 if (this._value is bool)
                 {
-                    result = !(bool)_value;
+                    result = !(bool)this._value;
                     return true;
                 }
+                //TODO: support numeric types?
             }
             else if (binder.Operation == ExpressionType.OnesComplement)
             {
                 if (this._value is short)
                 {
-                    result = ~(short)_value;
+                    result = ~(short)this._value;
                     return true;
                 }
                 else if (this._value is int)
                 {
-                    result = ~(int)_value;
+                    result = ~(int)this._value;
                     return true;
                 }
                 else if (this._value is long)
                 {
-                    result = ~(long)_value;
+                    result = ~(long)this._value;
                     return true;
                 }
                 else if (this._value is ushort)
                 {
-                    result = ~(ushort)_value;
+                    result = ~(ushort)this._value;
                     return true;
                 }
                 else if (this._value is uint)
                 {
-                    result = ~(uint)_value;
+                    result = ~(uint)this._value;
                     return true;
                 }
                 else if (this._value is ulong)
                 {
-                    result = ~(ulong)_value;
+                    result = ~(ulong)this._value;
                     return true;
                 }
             }
@@ -284,17 +265,17 @@ namespace FluidCore
         {
             if (this._value != null)
             {
-                if (binder.Type.IsInstanceOfType(this._value))
+                if (binder.Type.IsInstanceOfType(this._value) == true)
                 {
                     result = this._value;
                     return true;
                 }
-                else if (binder.Type.IsEnum)
+                else if (binder.Type.IsEnum == true)
                 {
                     result = Enum.Parse(binder.Type, this._value.ToString());
                     return true;
                 }
-                else if ((typeof(IConvertible).IsAssignableFrom(binder.Type)) && (typeof(IConvertible).IsAssignableFrom(this._value.GetType())))
+                else if ((typeof(IConvertible).IsAssignableFrom(binder.Type) == true) && (typeof(IConvertible).IsAssignableFrom(this._value.GetType()) == true))
                 {
                     result = Convert.ChangeType(this._value, binder.Type);
                     return true;
@@ -308,14 +289,14 @@ namespace FluidCore
                 {
                     var converter = TypeDescriptor.GetConverter(binder.Type);
 
-                    if (converter.CanConvertFrom(this._value.GetType()))
+                    if (converter.CanConvertFrom(this._value.GetType()) == true)
                     {
                         result = converter.ConvertFrom(this._value);
                         return true;
                     }
                 }
             }
-            else if (binder.Type.IsClass)
+            else if (binder.Type.IsClass == true)
             {
                 result = null;
                 return true;
@@ -357,10 +338,8 @@ namespace FluidCore
 
             var key = indexes[0] as string;
 
-            if (indexes[0] is int)
+            if (indexes[0] is int index)
             {
-                var index = (int)indexes[0];
-
                 if (this._values.Count < index)
                 {
                     key = this._values.ElementAt(index).Key;
@@ -384,9 +363,7 @@ namespace FluidCore
                 return false;
             }
 
-            var key = indexes[0] as string;
-
-            if (key != null)
+            if (indexes[0] is string key)
             {
                 if (this._value != null)
                 {
@@ -399,22 +376,22 @@ namespace FluidCore
                     }
                 }
 
-                if (string.Equals(Parent, key, StringComparison.InvariantCultureIgnoreCase))
+                if (string.Equals(Parent, key, StringComparison.InvariantCultureIgnoreCase) == true)
                 {
                     result = this._parent;
                     return true;
                 }
-                else if (string.Equals(Value, key, StringComparison.InvariantCultureIgnoreCase))
+                else if (string.Equals(Value, key, StringComparison.InvariantCultureIgnoreCase) == true)
                 {
                     result = this._value;
                     return true;
                 }
-                else if (string.Equals(Type, key, StringComparison.InvariantCultureIgnoreCase))
+                else if (string.Equals(Type, key, StringComparison.InvariantCultureIgnoreCase) == true)
                 {
-                    result = ((this._value != null) ? this._value.GetType() : null);
+                    result = this._value?.GetType();
                     return true;
                 }
-                else if (string.Equals(Root, key, StringComparison.InvariantCultureIgnoreCase))
+                else if (string.Equals(Root, key, StringComparison.InvariantCultureIgnoreCase) == true)
                 {
                     var root = this;
 
@@ -431,7 +408,7 @@ namespace FluidCore
                     result = root;
                     return true;
                 }
-                else if (string.Equals(Path, key, StringComparison.InvariantCultureIgnoreCase))
+                else if (string.Equals(Path, key, StringComparison.InvariantCultureIgnoreCase) == true)
                 {
                     var list = new LinkedList<string>();
 
@@ -456,10 +433,8 @@ namespace FluidCore
                     return this._values.TryGetValue(key, out result);
                 }
             }
-            else if (indexes[0] is int)
+            else if (indexes[0] is int index)
             {
-                var index = (int)indexes[0];
-
                 if (this._values.Count < index)
                 {
                     result = this._values.ElementAt(index).Value;
@@ -476,24 +451,6 @@ namespace FluidCore
             (this as IDictionary<string, object>)[key] = value;
         }
 
-        bool IDictionary<string, object>.ContainsKey(string key)
-        {
-            return this.GetDynamicMemberNames().Contains(key);
-        }
-
-        ICollection<string> IDictionary<string, object>.Keys
-        {
-            get
-            {
-                return this.GetDynamicMemberNames().ToList();
-            }
-        }
-
-        bool IDictionary<string, object>.Remove(string key)
-        {
-            return this._values.Remove(key);
-        }
-
         bool IDictionary<string, object>.TryGetValue(string key, out object value)
         {
             if (this._value != null)
@@ -508,14 +465,6 @@ namespace FluidCore
             }
 
             return this._values.TryGetValue(key, out value);
-        }
-
-        ICollection<object> IDictionary<string, object>.Values
-        {
-            get
-            {
-                return this._values.Values.Concat((this._value != null) ? TypeDescriptor.GetProperties(this._value).OfType<PropertyDescriptor>().Select(x => x.GetValue(this._value)) : Enumerable.Empty<object>()).ToList();
-            }
         }
 
         object IDictionary<string, object>.this[string key]
@@ -554,11 +503,6 @@ namespace FluidCore
             }
         }
 
-        private void OnPropertyChanged(PropertyChangedEventArgs e)
-        {
-            this.PropertyChanged?.Invoke(this, e);
-        }
-
         void ICollection<KeyValuePair<string, object>>.Add(KeyValuePair<string, object> item)
         {
             (this as IDictionary<string, object>)[item.Key] = item.Value;
@@ -569,43 +513,10 @@ namespace FluidCore
             this._values.Clear();
         }
 
-        bool ICollection<KeyValuePair<string, object>>.Contains(KeyValuePair<string, object> item)
-        {
-            return this._values.Contains(item);
-        }
-
         void ICollection<KeyValuePair<string, object>>.CopyTo(KeyValuePair<string, object>[] array, int arrayIndex)
         {
             this._values.CopyTo(array, arrayIndex);
         }
-
-        int ICollection<KeyValuePair<string, object>>.Count
-        {
-            get
-            {
-                return this._values.Count;
-            }
-        }
-
-        bool ICollection<KeyValuePair<string, object>>.IsReadOnly
-        {
-            get
-            {
-                return this._values.IsReadOnly;
-            }
-        }
-
-        bool ICollection<KeyValuePair<string, object>>.Remove(KeyValuePair<string, object> item)
-        {
-            return this._values.Remove(item);
-        }
-
-        IEnumerator<KeyValuePair<string, object>> IEnumerable<KeyValuePair<string, object>>.GetEnumerator()
-        {
-            return this._values.GetEnumerator();
-        }
-
-        public event PropertyChangedEventHandler PropertyChanged;
 
         object ICloneable.Clone()
         {
@@ -619,24 +530,32 @@ namespace FluidCore
             return clone;
         }
 
-        IEnumerator IEnumerable.GetEnumerator()
-        {
-            return (this as IDictionary<string, object>).GetEnumerator();
-        }
+        public override int GetHashCode() => this._value?.GetHashCode() ?? 0;
 
-        public static bool operator == (FluidObject fluid, object obj)
-        {
-            if (!(obj is FluidObject))
-            {
-                return fluid._value?.Equals(obj) == true;
-            }
+        public override IEnumerable<string> GetDynamicMemberNames() => this._values.Keys.Concat((this._value != null) ? TypeDescriptor.GetProperties(this._value).OfType<PropertyDescriptor>().Select(x => x.Name) : Enumerable.Empty<string>());
 
-            return fluid.Equals(obj);
-        }
+        bool IDictionary<string, object>.ContainsKey(string key) => this.GetDynamicMemberNames().Contains(key);
 
-        public static bool operator != (FluidObject fluid, object obj)
-        {
-            return !(fluid == obj);
-        }
+        ICollection<string> IDictionary<string, object>.Keys => this.GetDynamicMemberNames().ToList();
+
+        bool IDictionary<string, object>.Remove(string key) => this._values.Remove(key);
+
+        ICollection<object> IDictionary<string, object>.Values => this._values.Values.Concat((this._value != null) ? TypeDescriptor.GetProperties(this._value).OfType<PropertyDescriptor>().Select(x => x.GetValue(this._value)) : Enumerable.Empty<object>()).ToList();
+
+        private void OnPropertyChanged(PropertyChangedEventArgs e) => this.PropertyChanged?.Invoke(this, e);
+
+        bool ICollection<KeyValuePair<string, object>>.Contains(KeyValuePair<string, object> item) => this._values.Contains(item);
+
+        int ICollection<KeyValuePair<string, object>>.Count => this._values.Count;
+
+        bool ICollection<KeyValuePair<string, object>>.IsReadOnly => this._values.IsReadOnly;
+
+        bool ICollection<KeyValuePair<string, object>>.Remove(KeyValuePair<string, object> item) => this._values.Remove(item);
+
+        IEnumerator<KeyValuePair<string, object>> IEnumerable<KeyValuePair<string, object>>.GetEnumerator() => this._values.GetEnumerator();
+
+        IEnumerator IEnumerable.GetEnumerator() => (this as IDictionary<string, object>).GetEnumerator();
+
+        public event PropertyChangedEventHandler PropertyChanged;
     }
 }
